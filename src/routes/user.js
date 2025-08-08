@@ -18,4 +18,20 @@ router.get('/', authMiddleware, async (req, res) => {
   }
 });
 
+// Get user by ID (protected route)
+router.get('/:id', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id, '-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({
+      message: 'User retrieved successfully',
+      user
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
 module.exports = router;
