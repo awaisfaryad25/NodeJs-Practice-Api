@@ -28,47 +28,8 @@ const swaggerOptions = {
         description: 'Development server',
       },
     ],
-    components: {
-      securitySchemes: {
-        bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
-      },
-      schemas: {
-        User: {
-          type: 'object',
-          required: ['firstname', 'lastname', 'email', 'contact', 'password'],
-          properties: {
-            firstname: { type: 'string', description: 'User\'s first name', example: 'John' },
-            lastname: { type: 'string', description: 'User\'s last name', example: 'Doe' },
-            email: { type: 'string', description: 'User\'s email address', example: 'john@example.com' },
-            contact: { type: 'string', description: 'User\'s contact number', example: '+1234567890' },
-            password: { type: 'string', description: 'User\'s password (min 6 characters)', example: 'secure123' },
-          },
-        },
-        UserResponse: {
-          type: 'object',
-          properties: {
-            _id: { type: 'string', description: 'User\'s unique ID', example: '12345' },
-            firstname: { type: 'string' },
-            lastname: { type: 'string' },
-            email: { type: 'string' },
-            contact: { type: 'string' },
-          },
-        },
-        Error: {
-          type: 'object',
-          properties: {
-            message: { type: 'string' },
-            error: { type: 'string' },
-          },
-        },
-      },
-    },
   },
-  apis: ['./src/docs/authSwagger.js', './src/docs/userSwagger.js'], // Include both files
+  apis: ['./src/docs/authSwagger.js', './src/docs/userSwagger.js'],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);

@@ -41,6 +41,10 @@
  *     UserResponse:
  *       type: object
  *       properties:
+ *         _id:
+ *           type: string
+ *           description: User's unique ID
+ *           example: 12345
  *         firstname:
  *           type: string
  *         lastname:
@@ -146,43 +150,6 @@
  *               $ref: '#/components/schemas/Error'
  *       401:
  *         description: Invalid email or password
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- *       500:
- *         description: Server error
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
- */
-
-/**
- * @swagger
- * /auth/users:
- *   get:
- *     summary: Retrieve all registered users
- *     tags: [Auth]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: List of all registered users
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: Users retrieved successfully
- *                 users:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/UserResponse'
- *       401:
- *         description: Unauthorized - Invalid or missing token
  *         content:
  *           application/json:
  *             schema:
