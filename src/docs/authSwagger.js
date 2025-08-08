@@ -152,3 +152,43 @@
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
+
+// src/docs/authSwagger.js
+/**
+ * @swagger
+ * /auth/users:
+ *   get:
+ *     summary: Retrieve all registered users
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all registered users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 users:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       firstname:
+ *                         type: string
+ *                       lastname:
+ *                         type: string
+ *                       email:
+ *                         type: string
+ *                       contact:
+ *                         type: string
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       500:
+ *         description: Server error
+ */

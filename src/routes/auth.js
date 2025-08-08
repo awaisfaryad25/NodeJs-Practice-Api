@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const authMiddleware = require('../middleware/auth');
 
 router.post('/register', async (req, res) => {
   const { firstname, lastname, email, contact, password } = req.body;
@@ -59,6 +60,20 @@ router.post('/login', async (req, res) => {
         email: user.email,
         contact: user.contact
       }
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
+// Get all registered users (protected route)
+router.get('/users', authMiddleware, async (req, res) => {
+  try {
+    // Fetch all users, excluding the password field
+    const users = await User.find({}, '-password'); // Exclude password field
+    res.status(200).json({
+      message: 'Users retrieved successfully',
+      users
     });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
