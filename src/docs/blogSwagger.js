@@ -262,3 +262,50 @@
  *               $ref: '#/components/schemas/Error'
  */
 
+/**
+ * @swagger
+ * /blogs/{id}:
+ *   get:
+ *     summary: Retrieve a blog by ID
+ *     tags: [Blogs]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The blog ID
+ *     responses:
+ *       200:
+ *         description: Blog retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Blog retrieved successfully
+ *                 blog:
+ *                   $ref: '#/components/schemas/Blog'
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       404:
+ *         description: Blog not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
