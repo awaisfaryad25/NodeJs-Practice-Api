@@ -45,4 +45,30 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
+// Get all blogs (protected route, with optional pagination)
+router.get('/', authMiddleware, async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const blogs = await Blog.find()
+      .populate('author', 'firstname lastname email -_id')
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 }); // Sort by newest first
+    const totalBlogs = await Blog.countDocuments();
+
+    res.status(200).json({
+      message: 'Blogs retrieved successfully',
+      blogs,
+      totalBlogs,
+      totalPages: Math.ceil(totalBlogs / limit),
+      currentPage: page,
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+});
+
 module.exports = router;
