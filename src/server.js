@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const blogRoutes = require('./routes/blog');
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -20,7 +21,7 @@ const swaggerOptions = {
     info: {
       title: 'User Authentication API',
       version: '1.0.0',
-      description: 'API for user registration, login, and user management',
+      description: 'API for user registration, login, user and blog management',
     },
     servers: [
       {
@@ -29,7 +30,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ['./src/docs/authSwagger.js', './src/docs/userSwagger.js'],
+  apis: ['./src/docs/authSwagger.js', './src/docs/userSwagger.js', './src/docs/blogSwagger.js'],
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
@@ -46,6 +47,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // Routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+app.use('/blogs', blogRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3000;
