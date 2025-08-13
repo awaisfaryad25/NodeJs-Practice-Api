@@ -87,22 +87,6 @@ router.get('/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// Get blog by ID (protected route)
-router.get('/:id', authMiddleware, async (req, res) => {
-  try {
-    const blog = await Blog.findById(req.params.id).populate('author', 'firstname lastname email -_id');
-    if (!blog) {
-      return res.status(404).json({ message: 'Blog not found' });
-    }
-    res.status(200).json({
-      message: 'Blog retrieved successfully',
-      blog,
-    });
-  } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
-  }
-});
-
 // Update blog by ID (protected route, author only)
 router.put('/:id', authMiddleware, async (req, res) => {
   const { title, image, category, summary, content, tags, publishedAt } = req.body;
@@ -113,14 +97,13 @@ router.put('/:id', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Blog not found' });
     }
 
-    // Check if the authenticated user is the author
     if (blog.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'You are not authorized to update this blog' });
     }
 
     // Update fields if provided
     if (title) blog.title = title;
-    if (image !== undefined) blog.image = image; // Allow null to clear image
+    if (image !== undefined) blog.image = image;
     if (category) blog.category = category;
     if (summary) blog.summary = summary;
     if (content) blog.content = content;
@@ -157,7 +140,6 @@ router.delete('/:id', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Blog not found' });
     }
 
-    // Check if the authenticated user is the author
     if (blog.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: 'You are not authorized to delete this blog' });
     }

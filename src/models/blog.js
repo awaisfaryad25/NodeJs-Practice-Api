@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema({
   image: {
     type: String,
     trim: true,
-    default: null, // Optional field for image URL
+    default: null,
   },
   category: {
     type: String,
@@ -28,7 +28,7 @@ const blogSchema = new mongoose.Schema({
   },
   tags: {
     type: [String],
-    default: [], // Optional array of tags
+    default: [],
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -41,7 +41,7 @@ const blogSchema = new mongoose.Schema({
   },
   publishedAt: {
     type: Date,
-    default: null, // Set to null until published
+    default: null,
   },
 });
 
